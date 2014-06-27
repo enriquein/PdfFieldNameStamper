@@ -16,30 +16,32 @@ namespace PdfFieldNameStamper
 
         public void StampFields(string output)
         {
-            var reader = new PdfReader(_path);
-            if (reader.IsOpenedWithFullPermissions)
+            using (var reader = new PdfReader(_path))
             {
-                var newPdf = new FileStream(output, FileMode.OpenOrCreate);
-                var stamper = new PdfStamper(reader, newPdf);
-                var fields = stamper.AcroFields;
-                var fieldOutputList = new List<FieldOrder>();
-                IList<AcroFields.FieldPosition> fieldPosition;
+                if (!reader.IsOpenedWithFullPermissions)
+                    return;
 
-                foreach (var field in fields.Fields)
+                using (var newPdf = new FileStream(output, FileMode.OpenOrCreate))
+                using (var stamper = new PdfStamper(reader, newPdf))
                 {
-                    fields.SetField(field.Key, field.Key);
-                    fieldPosition = fields.GetFieldPositions(field.Key);
-                    if (fieldPosition != null && fieldPosition.Any())
+                    var fields = stamper.AcroFields;
+                    var fieldOutputList = new List<FieldOrder>();
+                    IList<AcroFields.FieldPosition> fieldPosition;
+
+                    foreach (var field in fields.Fields)
                     {
-                        fieldOutputList.Add(new FieldOrder { FieldName = field.Key, Page = fieldPosition.First().page, VerticalPosition = fieldPosition.First().position.Top });
+                        fields.SetField(field.Key, field.Key);
+                        fieldPosition = fields.GetFieldPositions(field.Key);
+                        if (fieldPosition != null && fieldPosition.Any())
+                        {
+                            fieldOutputList.Add(new FieldOrder { FieldName = field.Key, Page = fieldPosition.First().page, VerticalPosition = fieldPosition.First().position.Top });
+                        }
                     }
+
+                    stamper.FormFlattening = true;
+                    fieldOutputList = fieldOutputList.OrderBy(order => order.Page).ThenByDescending(x => x.VerticalPosition).ToList();
+                    File.WriteAllLines(output + ".fields.txt", fieldOutputList.Select(x => x.ToString()));
                 }
-                stamper.FormFlattening = true;
-                stamper.Close();
-                newPdf.Close();
-                
-                fieldOutputList = fieldOutputList.OrderBy(order => order.Page).ThenByDescending(x => x.VerticalPosition).ToList();
-                File.WriteAllLines(output + ".fields.txt", fieldOutputList.Select(x => x.ToString()));
             }
         }
 
@@ -51,7 +53,7 @@ namespace PdfFieldNameStamper
 
             public override string ToString()
             {
-                return string.Format("{0}|{1}|{2}", FieldName, Page, VerticalPosition);
+                return string.Format("Field: {0} | Page: {1} | Position: {2}", FieldName, Page, VerticalPosition);
             }
         }
     }
