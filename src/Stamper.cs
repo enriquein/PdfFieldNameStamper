@@ -1,4 +1,5 @@
-﻿using iTextSharp.text.pdf;
+﻿using System;
+using iTextSharp.text.pdf;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace PdfFieldNameStamper
 
             public override string ToString()
             {
-                return string.Format("Field: {0} | Page: {1} | Position: {2}", FieldName, Page, VerticalPosition);
+                return string.Format("{0}\t{1}\t{2}", FieldName, Page, VerticalPosition);
             }
         }
     }
