@@ -1,0 +1,12 @@
+[Dd]ebug/
+[Rr]elease/
+build/
+[Oo]bj/
+[Bb]in/
+packages/
+*sln.cache
+*.suo
+_ReSharper.*/
+*.user
+*.ide
+*.DotSettings
