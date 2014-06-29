@@ -37,12 +37,14 @@
             this.btnBeginProcess = new System.Windows.Forms.Button();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.fileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtOwnerPassword = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(18, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 0;
@@ -50,7 +52,7 @@
             // 
             // txtInputPdf
             // 
-            this.txtInputPdf.Location = new System.Drawing.Point(15, 26);
+            this.txtInputPdf.Location = new System.Drawing.Point(18, 26);
             this.txtInputPdf.Name = "txtInputPdf";
             this.txtInputPdf.Size = new System.Drawing.Size(505, 20);
             this.txtInputPdf.TabIndex = 1;
@@ -68,7 +70,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 53);
+            this.label2.Location = new System.Drawing.Point(18, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 3;
@@ -76,7 +78,7 @@
             // 
             // txtOutputPdf
             // 
-            this.txtOutputPdf.Location = new System.Drawing.Point(15, 72);
+            this.txtOutputPdf.Location = new System.Drawing.Point(18, 72);
             this.txtOutputPdf.Name = "txtOutputPdf";
             this.txtOutputPdf.Size = new System.Drawing.Size(505, 20);
             this.txtOutputPdf.TabIndex = 4;
@@ -93,7 +95,7 @@
             // 
             // btnBeginProcess
             // 
-            this.btnBeginProcess.Location = new System.Drawing.Point(463, 99);
+            this.btnBeginProcess.Location = new System.Drawing.Point(463, 103);
             this.btnBeginProcess.Name = "btnBeginProcess";
             this.btnBeginProcess.Size = new System.Drawing.Size(93, 33);
             this.btnBeginProcess.TabIndex = 6;
@@ -105,21 +107,40 @@
             // 
             this.txtStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtStatus.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStatus.Location = new System.Drawing.Point(0, 137);
+            this.txtStatus.Location = new System.Drawing.Point(0, 142);
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(568, 117);
+            this.txtStatus.Size = new System.Drawing.Size(568, 136);
             this.txtStatus.TabIndex = 7;
             // 
             // fileDialog
             // 
             this.fileDialog.SupportMultiDottedExtensions = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 100);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(174, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Owner/encryption password (if any)";
+            // 
+            // txtOwnerPassword
+            // 
+            this.txtOwnerPassword.Location = new System.Drawing.Point(18, 116);
+            this.txtOwnerPassword.Name = "txtOwnerPassword";
+            this.txtOwnerPassword.PasswordChar = '*';
+            this.txtOwnerPassword.Size = new System.Drawing.Size(120, 20);
+            this.txtOwnerPassword.TabIndex = 9;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 254);
+            this.ClientSize = new System.Drawing.Size(568, 278);
+            this.Controls.Add(this.txtOwnerPassword);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.btnBeginProcess);
             this.Controls.Add(this.btnBrowseOutput);
@@ -148,6 +169,8 @@
         private System.Windows.Forms.Button btnBeginProcess;
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.OpenFileDialog fileDialog;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtOwnerPassword;
     }
 }
 

@@ -11,19 +11,28 @@ namespace PdfFieldNameStamper
             InitializeComponent();
         }
 
-        public void Process(string input, string output)
+        public void Process(string input, string output, string password)
         {
             ClearLog();
             Log("Begin processing input file: " + input);
-            var nameStamper = new Stamper(input);
+            var nameStamper = new Stamper(input, password);
             Log("Stamping field names.");
-            nameStamper.StampFields(output);
-            Log("Done. New file created at: " + output);
+            try
+            {
+                nameStamper.StampFields(output);
+                Log("Done. New file created at: " + output);
+            }
+            catch (Exception ex)
+            {
+                Log("An error occurred while trying to stamp the fields. The error was: " + ex.Message);
+                Log("Done.");
+            }
+
         }
 
         private void btnBeginProcess_Click(object sender, EventArgs e)
         {
-            Process(txtInputPdf.Text, txtOutputPdf.Text);
+            Process(txtInputPdf.Text, txtOutputPdf.Text, txtOwnerPassword.Text);
         }
 
         private void ClearLog()
