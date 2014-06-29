@@ -1,5 +1,4 @@
-﻿using System;
-using iTextSharp.text.pdf;
+﻿using iTextSharp.text.pdf;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,19 +8,20 @@ namespace PdfFieldNameStamper
     public class Stamper
     {
         private readonly string _path;
+        private readonly byte[] _password;
 
-        public Stamper(string path)
+        public Stamper(string path, string password)
         {
             _path = path;
+            _password = (string.IsNullOrEmpty(password)) ? null : System.Text.Encoding.Unicode.GetBytes(password);
         }
 
         public void StampFields(string output)
         {
-            using (var reader = new PdfReader(_path))
-            {
-                if (!reader.IsOpenedWithFullPermissions)
-                    return;
+            PdfReader.unethicalreading = true;
 
+            using (var reader = (_password == null) ? new PdfReader(_path) : new PdfReader(_path, _password))
+            {
                 using (var newPdf = new FileStream(output, FileMode.OpenOrCreate))
                 using (var stamper = new PdfStamper(reader, newPdf))
                 {
