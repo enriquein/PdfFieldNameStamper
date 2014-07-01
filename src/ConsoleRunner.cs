@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace PdfFieldNameStamper
 {
@@ -8,13 +7,9 @@ namespace PdfFieldNameStamper
     {
         public static void Run(List<string> arguments)
         {
-            StreamWriter standardOutput = new StreamWriter(Console.OpenStandardOutput());
-            standardOutput.AutoFlush = true;
-            Console.SetOut(standardOutput);
-
             if (arguments.Count > 3)
             {
-                Console.Out.WriteLine("Incorrect number of arguments. Correct command-line usage:\n\tPdfFieldNameStamper inputFullPdfPath [outputFullPdfPath]");
+                Console.Write("\nIncorrect number of arguments. Correct command-line usage:\n\tPdfFieldNameStamper inputFullPdfPath [outputFullPdfPath]\n");
                 return;
             }
 
@@ -24,15 +19,15 @@ namespace PdfFieldNameStamper
             var stamper = new Stamper();
             try
             {
-                Console.WriteLine("Begin processing input file: " + inputPdf);
-                Console.WriteLine("Stamping field names.");
+                Console.Write("\nBegin processing input file: " + inputPdf);
+                Console.Write("\nStamping field names.");
                 stamper.StampFields(inputPdf, outputPdf);
-                Console.WriteLine("Done. New file created at: " + outputPdf);
+                Console.Write("\nDone.\n");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred while trying to stamp the fields. The error was: " + ex.Message);
-                Console.WriteLine("Done.");
+                Console.WriteLine("\nAn error occurred while trying to stamp the fields. The error was: " + ex.Message);
+                Console.WriteLine("\nDone.\n");
             }
         }
     }
