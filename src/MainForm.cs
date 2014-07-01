@@ -6,8 +6,10 @@ namespace PdfFieldNameStamper
 {
     public partial class MainForm : Form
     {
+        private readonly Stamper _stamper;
         public MainForm()
         {
+            _stamper = new Stamper(); 
             InitializeComponent();
         }
 
@@ -15,11 +17,11 @@ namespace PdfFieldNameStamper
         {
             ClearLog();
             Log("Begin processing input file: " + input);
-            var nameStamper = new Stamper(input, password);
+
             Log("Stamping field names.");
             try
             {
-                nameStamper.StampFields(output);
+                _stamper.StampFields(input, output);
                 Log("Done. New file created at: " + output);
             }
             catch (Exception ex)
@@ -59,7 +61,7 @@ namespace PdfFieldNameStamper
             if (result == DialogResult.OK)
             {
                 txtInputPdf.Text = fileDialog.FileName;
-                txtOutputPdf.Text = Path.GetDirectoryName(fileDialog.FileName) + @"\" + Path.GetFileNameWithoutExtension(fileDialog.FileName) + ".stamped" + Path.GetExtension(fileDialog.FileName);
+                txtOutputPdf.Text = _stamper.GetAutomaticOutputFilePath(txtInputPdf.Text);
             }
         }
 
