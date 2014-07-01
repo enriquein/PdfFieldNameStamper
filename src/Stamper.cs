@@ -43,7 +43,7 @@ namespace PdfFieldNameStamper
 
         public string GetAutomaticOutputFilePath(string input)
         {
-            return Path.GetDirectoryName(input) + @"\" + Path.GetFileNameWithoutExtension(input) + ".stamped" + Path.GetExtension(input);
+            return Path.Combine(Path.GetDirectoryName(input), Path.GetFileNameWithoutExtension(input) + ".stamped" + Path.GetExtension(input));
         }
 
         private class FieldOrder
