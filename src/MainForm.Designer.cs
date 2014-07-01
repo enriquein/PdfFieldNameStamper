@@ -52,10 +52,14 @@
             // 
             // txtInputPdf
             // 
+            this.txtInputPdf.AllowDrop = true;
             this.txtInputPdf.Location = new System.Drawing.Point(18, 26);
             this.txtInputPdf.Name = "txtInputPdf";
             this.txtInputPdf.Size = new System.Drawing.Size(505, 20);
             this.txtInputPdf.TabIndex = 1;
+            this.txtInputPdf.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtInputPdf_OnDragDrop);
+            this.txtInputPdf.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtInputPdf_OnDragEnter);
+            this.txtInputPdf.DragOver += new System.Windows.Forms.DragEventHandler(this.txtInputPdf_OnDragOver);
             // 
             // btnBrowseInput
             // 
@@ -78,6 +82,7 @@
             // 
             // txtOutputPdf
             // 
+            this.txtOutputPdf.AllowDrop = true;
             this.txtOutputPdf.Location = new System.Drawing.Point(18, 72);
             this.txtOutputPdf.Name = "txtOutputPdf";
             this.txtOutputPdf.Size = new System.Drawing.Size(505, 20);

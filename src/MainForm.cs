@@ -9,7 +9,7 @@ namespace PdfFieldNameStamper
         private readonly Stamper _stamper;
         public MainForm()
         {
-            _stamper = new Stamper(); 
+            _stamper = new Stamper();
             InitializeComponent();
         }
 
@@ -80,6 +80,43 @@ namespace PdfFieldNameStamper
             {
                 txtOutputPdf.Text = fileDialog.FileName;
             }
+        }
+
+        private void txtInputPdf_OnDragDrop(object sender, DragEventArgs e)
+        {
+            var file = GetPdfFilenameFromDragData(e);
+            if (file != null)
+            {
+                fileDialog.FileName = file;
+                txtInputPdf.Text = file;
+                txtOutputPdf.Text = _stamper.GetAutomaticOutputFilePath(txtInputPdf.Text);
+            } 
+        }
+
+        private void txtInputPdf_OnDragEnter(object sender, DragEventArgs e)
+        {
+            if (GetPdfFilenameFromDragData(e) != null)
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                Log("Drag and drop functionality is only allowed for PDF files.");
+            }
+        }
+
+        private void txtInputPdf_OnDragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = (GetPdfFilenameFromDragData(e) != null) ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        private string GetPdfFilenameFromDragData(DragEventArgs args)
+        {
+            var files = (string[])args.Data.GetData(DataFormats.FileDrop);
+            if (files != null && files.Length != 0 && Path.GetExtension(files[0]) == ".pdf")
+                return files[0];
+
+            return null;
         }
     }
 }
