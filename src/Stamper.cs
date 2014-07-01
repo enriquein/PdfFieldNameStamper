@@ -2,25 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace PdfFieldNameStamper
 {
     public class Stamper
     {
-        private readonly string _path;
-        private readonly byte[] _password;
-
-        public Stamper(string path, string password)
-        {
-            _path = path;
-            _password = (string.IsNullOrEmpty(password)) ? null : System.Text.Encoding.Unicode.GetBytes(password);
-        }
-
-        public void StampFields(string output)
+        public void StampFields(string input, string output = null, string password = null)
         {
             PdfReader.unethicalreading = true;
 
-            using (var reader = (_password == null) ? new PdfReader(_path) : new PdfReader(_path, _password))
+            if (string.IsNullOrEmpty(output))
+                output = GetAutomaticOutputFilePath(input);
+
+            using (var reader = (password == null) ? new PdfReader(input) : new PdfReader(input, Encoding.Unicode.GetBytes(password)))
             {
                 using (var newPdf = new FileStream(output, FileMode.OpenOrCreate))
                 using (var stamper = new PdfStamper(reader, newPdf))
@@ -46,7 +41,12 @@ namespace PdfFieldNameStamper
             }
         }
 
-        public class FieldOrder
+        public string GetAutomaticOutputFilePath(string input)
+        {
+            return Path.GetDirectoryName(input) + @"\" + Path.GetFileNameWithoutExtension(input) + ".stamped" + Path.GetExtension(input);
+        }
+
+        private class FieldOrder
         {
             public float Page { get; set; }
             public float VerticalPosition { get; set; }
