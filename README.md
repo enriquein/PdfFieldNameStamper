@@ -43,7 +43,7 @@ Pull requests are welcome!
 Releases
 --------
 
-You can download the latest binary release from [here](https://dl.dropboxusercontent.com/u/2986131/extern/PdfFieldNameStamper_latest.zip).
+You can download the latest binary release from [here](https://github.com/enriquein/PdfFieldNameStamper/releases).
 
 Thanks
 ------
